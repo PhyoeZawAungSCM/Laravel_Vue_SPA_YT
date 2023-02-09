@@ -259,7 +259,6 @@ export default {
     },
     editMode(category) {
       this.isEdit = true;
-      console.log(category);
       this.categoryData.name = category.name;
       this.categoryData.id = category.id;
       this.categoryData.image = category.image;
@@ -271,7 +270,7 @@ export default {
       formData.append("name", this.categoryData.name);
       formData.append("image", this.categoryData.image);
       formData.append("_method", "put");
-      console.log("this is ", formData);
+
       httpFile()
         .post(`/category/${this.categoryData.id}`, formData)
         .then((res) => {

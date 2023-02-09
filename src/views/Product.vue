@@ -194,7 +194,7 @@ export default {
   methods: {
     getCategoryName(id) {
       let data = this.categories.find((data) => data.id == id);
-      return data.name;
+      return data ? data.name : id;
     },
     openModal() {
       this.clearErrors();
@@ -255,7 +255,7 @@ export default {
       }
     },
     clearErrors() {
-      this.errors.image = this.errors.name = null;
+      this.errors.image = this.errors.name = this.errors.category_id = null;
     },
     getCategories() {
       http()
@@ -331,13 +331,13 @@ export default {
           cat.image = res.data.image;
           cat.category_id = res.data.category_id;
           this.flashMessage.success({
-            message: "prodcut Update Successfully",
+            message: "product Update Successfully",
           });
           this.clearErrors();
         })
         .catch((error) => {
           this.flashMessage.error({
-            message: "prodcut Update Failed",
+            message: "product Update Failed",
           });
           this.clearErrors();
           if (error.response.data.errors.name) {
@@ -350,7 +350,7 @@ export default {
     },
     LoadMoreData() {
       http()
-        .get(`prodcuts?page=${this.nextPage}`)
+        .get(`products?page=${this.nextPage}`)
         .then((response) => {
           if (response.data.current_page == response.data.last_page) {
             this.hasMore = false;
@@ -358,7 +358,7 @@ export default {
             console.log("They are note same");
             this.nextPage += 1;
           }
-          this.proudcts = [...this.products, ...response.data.data];
+          this.products = [...this.products, ...response.data.data];
         })
         .catch((error) => {
           this.flashMessage.error({
@@ -375,5 +375,5 @@ export default {
 };
 </script>
   
-<style>
+  <style>
 </style>
