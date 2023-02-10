@@ -6,19 +6,20 @@
 </template>
 
 <script>
-import * as auth from "@/services/auth_services";
+
+import * as auth from '@/services/auth_services';
 export default {
   name: "App",
-  methods: {
-    getProfile() {
-      if (auth.isLogin()) {
-        this.$store.dispatch("load_user");
+  methods:{
+    getProfile(){
+      if(auth.isLogin()){
+        this.$store.dispatch('load_user');
       }
-    },
+    }
   },
-  mounted() {
+  mounted(){
     this.getProfile();
-  },
+  }
 };
 </script>
 

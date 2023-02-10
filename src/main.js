@@ -14,47 +14,23 @@ import store from '@/store/index';
 
 
 import FlashMessage from '@smartweb/vue-flash-message';
-import { ValidationProvider, extend, ValidationObserver } from 'vee-validate';
-import { required, email, max, min, confirmed, image } from 'vee-validate/dist/rules';
+import { ValidationProvider,ValidationObserver } from 'vee-validate';
+// import { required, email, max, min, confirmed, image } from 'vee-validate/dist/rules';
 
-// No message specified.
-extend('email', email);
-
-// Override the default message.
-extend('required', {
-  ...required,
-  message: 'This field is required'
-});
-
-extend('min', {
-  ...min,
-  message: '{_field_} must be minimum {length} characters'
-});
-extend('max', {
-  ...max,
-  message: "The name must be maximum 225 character"
-});
-
-extend('confirm', {
-  ...confirmed,
-  message: "Password Confirmation doesn't match"
-});
-
-extend('image', {
-  ...image,
-  message: 'Image must be an image'
-})
 
 // Register it globally
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
+
+import '@/services/validation.js';
 Vue.use(FlashMessage);
 Vue.use(VueRouter)
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
-new Vue({
+const vm = new Vue({
   store,
   router,
-
   render: h => h(App),
 }).$mount('#app')
+
+export {vm};

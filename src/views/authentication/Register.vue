@@ -174,46 +174,11 @@ export default {
         password: "",
         password_confirmation: "",
       },
-      error: {
-        name: null,
-        email: null,
-        password: null,
-      },
     };
   },
   methods: {
-    clearError() {
-      this.error = {
-        name: null,
-        email: null,
-        password: null,
-      };
-    },
     registerUser() {
-      this.clearError();
-      http()
-        .post("/auth/register", this.user)
-        .then((response) => {
-          this.$router.push("/login");
-        })
-        .catch((error) => {
-          console.log(error);
-          switch (error.response.status) {
-            case 422:
-              if (error.response.data.errors.name)
-                this.error.name = error.response.data.errors.name[0];
-              if (error.response.data.errors.email)
-                this.error.email = error.response.data.errors.email[0];
-              if (error.response.data.errors.password)
-                this.error.password = error.response.data.errors.password[0];
-              break;
-            default:
-              this.flashMessage.error({
-                message: "Some Error occur,Please try again",
-              });
-              break;
-          }
-        });
+      this.$store.dispatch("registerUser", this.user);
     },
   },
 };

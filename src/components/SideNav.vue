@@ -11,7 +11,7 @@
             Dashboard
           </router-link>
           <router-link
-            v-if="$store.state.user.role == 'adminstrator'"
+            v-if="$store.state.Auth.user.role == 'adminstrator'"
             to="/categories"
             class="nav-link"
             exact

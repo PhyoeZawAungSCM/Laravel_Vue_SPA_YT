@@ -1,12 +1,12 @@
-import { required, email, max, min, confirmed } from 'vee-validate/dist/rules';
-
+import { required, email, max, min, confirmed, image } from 'vee-validate/dist/rules';
+import { extend } from 'vee-validate';
 // No message specified.
 extend('email', email);
 
 // Override the default message.
 extend('required', {
   ...required,
-  message: 'This field is required'
+  message: '{_field_} is required'
 });
 
 extend('min',{
@@ -21,4 +21,9 @@ extend('max',{
 extend('confirm',{
   ...confirmed,
   message:"Password Confirmation doesn't match"
+})
+
+extend('image',{
+  ...image,
+  message:"must be an image"
 })

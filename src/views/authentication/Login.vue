@@ -119,7 +119,6 @@
 </template>
 
 <script>
-import { http } from "@/services/http_services";
 export default {
   name: "login",
   data() {
@@ -129,56 +128,11 @@ export default {
         password: "",
       },
       remember_me: false,
-      error: {
-        email: null,
-        password: null,
-        match: null,
-      },
     };
   },
   methods: {
-    clearErrors() {
-      this.error = {
-        email: null,
-        password: null,
-        match: null,
-      };
-    },
-    storeUser(data) {
-      localStorage.setItem("token", JSON.stringify(data));
-    },
     loginUser() {
-      this.clearErrors();
-      http()
-        .post("/auth/login", this.user)
-        .then((response) => {
-          console.log(response.data);
-          this.storeUser(response.data.access_token);
-          this.$store.dispatch("load_user");
-          this.$router.push("/home");
-        })
-        .catch((error) => {
-          switch (error.response.status) {
-            case 422:
-              if (error.response.data.errors.email) {
-                this.error.email = error.response.data.errors.email[0];
-              }
-              if (error.response.data.errors.password) {
-                this.error.password = error.response.data.errors.password[0];
-              }
-              break;
-            case 401:
-              this.flashMessage.error({
-                message: error.response.data.message,
-              });
-              break;
-            default:
-              this.flashMessage.error({
-                message: "Some error occur , please try again",
-              });
-              break;
-          }
-        });
+      this.$store.dispatch("loginUser", this.user);
     },
   },
 };

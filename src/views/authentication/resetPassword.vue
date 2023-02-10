@@ -12,92 +12,106 @@
                   </h3>
                 </div>
                 <div class="card-body">
-                  <ValidationObserver v-slot="{invalid}">
-                  <form @submit.prevent="resetPassword">
-                    <ValidationProvider v-slot="{errors}" rules="required|email">
-                    <div class="form-floating mb-3">
-                      <input
-                        class="form-control"
-                        id="inputEmail"
-                        type="email"
-                        placeholder="name@example.com"
-                        v-model="user.email"
-                      />
-                      <label for="inputEmail">Email address</label>
-                      <span class="invalid-feedback">{{ errors[0] }}</span>
-                      <span v-if="errors.email" class="text-danger fs-6">{{
-                        errors.email
-                      }}</span>
-                    </div>
-                  </ValidationProvider>
-                  <ValidationProvider v-slot="{errors}" rules="required|min:6">
-                    <div class="form-floating mb-3">
-                      <input
-                        class="form-control"
-                        name="Verification Code"
-                        v-model="user.verification_code"
-                        autofocus="true"
-                      />
-                      <label for="inputEmail">Verification Code</label>
-                      <span class="invalid-feedback">{{ errors[0] }}</span>
-                      <span
-                        v-if="errors.verification_code"
-                        class="text-danger fs-6"
-                        >{{ errors.verification_code }}</span
+                  <ValidationObserver v-slot="{ invalid }">
+                    <form @submit.prevent="resetPassword">
+                      <ValidationProvider
+                        v-slot="{ errors }"
+                        rules="required|email"
                       >
-                    </div>
-                  </ValidationProvider>
-                  <ValidationProvider v-slot="{errors}" rules="required|min:8" vid="confirmed">
-                    <div class="form-floating mb-3">
-                      <input
-                        class="form-control"
-                        type="password"
-                        name="password"
-                        v-model="user.password"
-                      />
-                      <label for="inputEmail">New Password</label>
-                      <span class="invalid-feedback">{{ errors[0] }}</span>
-                      <span v-if="errors.password" class="text-danger fs-6">{{
-                        errors.password
-                      }}</span>
-                    </div>
-                  </ValidationProvider>
-                  <ValidationProvider v-slot="{errors}" rules="required|min:8|confirm:confirmed">
-                    <div class="form-floating mb-3">
-                      <input
-                        class="form-control"
-                        type="password"
-                        name="password"
-                        v-model="user.password_confirmation"
-                      />
-                      <span class="invalid-feedback">{{ errors[0] }}</span>
-                      <label for="inputEmail">Confirm Password</label>
-                    </div>
-                  </ValidationProvider>
-                    <div
-                      class="
-                        d-flex
-                        align-items-center
-                        justify-content-between
-                        mt-4
-                        mb-0
-                      "
-                    >
-                      <router-link class="small" to="/login"
-                        >Return to login</router-link
+                        <div class="form-floating mb-3">
+                          <input
+                            class="form-control"
+                            id="inputEmail"
+                            type="email"
+                            placeholder="name@example.com"
+                            v-model="user.email"
+                          />
+                          <label for="inputEmail">Email address</label>
+                          <span class="invalid-feedback">{{ errors[0] }}</span>
+                          <span v-if="errors.email" class="text-danger fs-6">{{
+                            errors.email
+                          }}</span>
+                        </div>
+                      </ValidationProvider>
+                      <ValidationProvider
+                        v-slot="{ errors }"
+                        rules="required|min:6"
                       >
-                      <button
-                        type="submit"
-                        class="btn btn-primary"
-                        :disabled="isSetting || invalid"
-                        ref="setButton"
-                        
+                        <div class="form-floating mb-3">
+                          <input
+                            class="form-control"
+                            name="Verification Code"
+                            v-model="user.verification_code"
+                            autofocus="true"
+                          />
+                          <label for="inputEmail">Verification Code</label>
+                          <span class="invalid-feedback">{{ errors[0] }}</span>
+                          <span
+                            v-if="errors.verification_code"
+                            class="text-danger fs-6"
+                            >{{ errors.verification_code }}</span
+                          >
+                        </div>
+                      </ValidationProvider>
+                      <ValidationProvider
+                        v-slot="{ errors }"
+                        rules="required|min:8"
+                        vid="confirmed"
                       >
-                        Reset Password
-                      </button>
-                    </div>
-                  </form>
-                </ValidationObserver>
+                        <div class="form-floating mb-3">
+                          <input
+                            class="form-control"
+                            type="password"
+                            name="password"
+                            v-model="user.password"
+                          />
+                          <label for="inputEmail">New Password</label>
+                          <span class="invalid-feedback">{{ errors[0] }}</span>
+                          <span
+                            v-if="errors.password"
+                            class="text-danger fs-6"
+                            >{{ errors.password }}</span
+                          >
+                        </div>
+                      </ValidationProvider>
+                      <ValidationProvider
+                        v-slot="{ errors }"
+                        rules="required|min:8|confirm:confirmed"
+                      >
+                        <div class="form-floating mb-3">
+                          <input
+                            class="form-control"
+                            type="password"
+                            name="password"
+                            v-model="user.password_confirmation"
+                          />
+                          <span class="invalid-feedback">{{ errors[0] }}</span>
+                          <label for="inputEmail">Confirm Password</label>
+                        </div>
+                      </ValidationProvider>
+                      <div
+                        class="
+                          d-flex
+                          align-items-center
+                          justify-content-between
+                          mt-4
+                          mb-0
+                        "
+                      >
+                        <router-link class="small" to="/login"
+                          >Return to login</router-link
+                        >
+                        <button
+                          type="submit"
+                          class="btn btn-primary"
+                          :disabled="$store.state.Auth.disableButton || invalid"
+                          ref="setButton"
+                        >
+                          Reset Password
+                        </button>
+                      </div>
+                    </form>
+                  </ValidationObserver>
                 </div>
                 <div class="card-footer text-center py-3">
                   <div class="small">
@@ -130,7 +144,6 @@
 </template>
 
 <script>
-import { http } from "@/services/http_services";
 export default {
   data() {
     return {
@@ -141,11 +154,6 @@ export default {
         password_confirmation: "",
         verification_code: "",
       },
-      errors: {
-        email: null,
-        password: null,
-        verification_code: null,
-      },
     };
   },
   mounted() {
@@ -153,35 +161,9 @@ export default {
   },
   methods: {
     resetPassword() {
-      this.disableButton();
-      http()
-        .post("/auth/reset-password", this.user)
-        .then((response) => {
-          this.flashMessage.success({
-            message: "Password Reset Success",
-          });
-          this.enableButton();
-          console.log(response);
-          this.$router.push("/login");
-        })
-        .catch((error) => {
-          this.enableButton();
-          this.$refs.setButton.innerHTML = "Try Again";
-          if (error.response.status == 422) {
-            if (error.response.data.errors.verification_code) {
-              this.errors.verification_code =
-                error.response.data.errors.verification_code[0];
-            }
-            if (error.response.data.errors.email) {
-              this.errors.email = error.response.data.errors.email[0];
-            }
-            if (error.response.data.errors.password) {
-              this.errors.password = error.response.data.errors.password[0];
-            }
-          }
-          console.log(error);
-        });
+      this.$store.dispatch("resetPassword", this.user);
     },
+
     disableButton() {
       this.isSetting = true;
       this.$refs.setButton.innerHTML = "Setting...";

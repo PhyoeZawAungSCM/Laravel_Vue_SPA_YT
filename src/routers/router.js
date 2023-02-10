@@ -38,7 +38,7 @@ const router = new Router({
                     component: Categories,
                     name: 'categories',
                     beforeEnter: (to, from, next) => {
-                        if (store.state.user.role == 'adminstrator') {
+                        if (store.state.Auth.user.role == 'adminstrator') {
                             next();
                         } else {
                             next('/products');

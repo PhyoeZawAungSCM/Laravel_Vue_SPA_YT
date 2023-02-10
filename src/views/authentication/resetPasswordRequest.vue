@@ -52,7 +52,7 @@
                           class="btn btn-primary"
                           type="submit"
                           ref="sendButton"
-                          :disabled="isSending || invalid"
+                          :disabled="$store.state.Auth.disableButton || invalid"
                         >
                           Send Code
                         </button>
@@ -91,50 +91,17 @@
 </template>
 
 <script>
-import { http } from "@/services/http_services";
 import { ValidationObserver } from "vee-validate";
 export default {
   data() {
     return {
       email: "",
-      isSending: false,
       error: null,
     };
   },
   methods: {
     sendCode() {
-      this.disableButton();
-      http()
-        .post("/auth/reset-password-request", { email: this.email })
-        .then((response) => {
-          this.flashMessage.success({
-            message: "Verification code send to your email",
-          });
-          this.enableButton();
-          console.log(response.data);
-          this.$router.push(`/reset-password/${this.email}`);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.enableButton();
-          this.$refs.sendButton.innerHTML = "Send Code Again";
-          if (error.response.status == 422) {
-            this.error = error.response.data.errors.email[0];
-          } else {
-            this.flashMessage.error({
-              message: "Some Error occur please try again",
-            });
-          }
-          console.log(error.response.data);
-        });
-    },
-    disableButton() {
-      this.isSending = true;
-      this.$refs.sendButton.innerHTML = "Sending...";
-    },
-    enableButton() {
-      this.isSending = false;
-      this.$refs.sendButton.innerHTML = "Send";
+      this.$store.dispatch("sendCode", this.email);
     },
   },
   components: { ValidationObserver },
