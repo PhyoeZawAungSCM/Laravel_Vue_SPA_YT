@@ -64,6 +64,13 @@ const router = new Router({
             path: '/register',
             name: 'register',
             component: Register,
+            beforeEnter: (to, from, next) => {
+                if (isLogin()) {
+                    next('/home');
+                } else {
+                    next()
+                }
+            }
         },
         {
             path: '/login',
