@@ -163,15 +163,6 @@ export default {
     resetPassword() {
       this.$store.dispatch("resetPassword", this.user);
     },
-
-    disableButton() {
-      this.isSetting = true;
-      this.$refs.setButton.innerHTML = "Setting...";
-    },
-    enableButton() {
-      this.isSetting = false;
-      this.$refs.setButton.innerHTML = "Set";
-    },
   },
 };
 </script>

@@ -29,9 +29,9 @@
                           <span class="invalid-feedback">{{ errors[0] }}</span>
                         </div>
                       </ValidationProvider>
-                      <div class="invalid-feedback" v-if="error.email">
+                      <!-- <div class="invalid-feedback" v-if="error.email">
                         {{ error.email }}
-                      </div>
+                      </div> -->
                       <ValidationProvider
                         name="password"
                         rules="required|min:8"
@@ -49,9 +49,9 @@
                           <span class="invalid-feedback">{{ errors[0] }}</span>
                         </div>
                       </ValidationProvider>
-                      <div class="invalid-feedback" v-if="error.password">
+                      <!-- <div class="invalid-feedback" v-if="error.password">
                         {{ error.password }}
-                      </div>
+                      </div> -->
 
                       <div class="form-check mb-3">
                         <input
@@ -92,7 +92,7 @@
                 </div>
                 <div class="card-footer text-center py-3">
                   <div class="small">
-                    <a href="/register">Need an account? Sign up!</a>
+                    <router-link to="/register">Need an account? Sign up!</router-link>
                   </div>
                 </div>
               </div>
@@ -107,9 +107,9 @@
           <div class="d-flex align-items-center justify-content-between small">
             <div class="text-muted">Copyright &copy; Your Website 2022</div>
             <div>
-              <a href="#">Privacy Policy</a>
+              <a>Privacy Policy</a>
               &middot;
-              <a href="#">Terms &amp; Conditions</a>
+              <a>Terms &amp; Conditions</a>
             </div>
           </div>
         </div>

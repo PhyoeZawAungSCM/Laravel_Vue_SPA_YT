@@ -36,9 +36,9 @@
                             </div>
                           </ValidationProvider>
 
-                          <div v-if="error.name" class="invalid-feedback">
+                          <!-- <div v-if="error.name" class="invalid-feedback">
                             {{ error.name }}
-                          </div>
+                          </div> -->
                         </div>
 
                         <div class="col-md-6">
@@ -62,9 +62,9 @@
                             </div>
                           </ValidationProvider>
 
-                          <div v-if="error.email" class="invalid-feedback">
+                          <!-- <div v-if="error.email" class="invalid-feedback">
                             {{ error.email }}
-                          </div>
+                          </div> -->
                         </div>
                       </div>
 
@@ -90,9 +90,9 @@
                               }}</span>
                             </div>
                           </ValidationProvider>
-                          <div v-if="error.password" class="invalid-feedback">
+                          <!-- <div v-if="error.password" class="invalid-feedback">
                             {{ error.password }}
-                          </div>
+                          </div> -->
                         </div>
                         <div class="col-md-6">
                           <ValidationProvider
@@ -151,9 +151,9 @@
           <div class="d-flex align-items-center justify-content-between small">
             <div class="text-muted">Copyright &copy; Your Website 2022</div>
             <div>
-              <a href="#">Privacy Policy</a>
+              <a >Privacy Policy</a>
               &middot;
-              <a href="#">Terms &amp; Conditions</a>
+              <a >Terms &amp; Conditions</a>
             </div>
           </div>
         </div>
@@ -163,7 +163,6 @@
 </template>
 
 <script>
-import { http } from "@/services/http_services";
 export default {
   name: "register",
   data() {
