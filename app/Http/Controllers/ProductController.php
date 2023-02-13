@@ -75,6 +75,10 @@ class ProductController extends Controller
                 'image'=>$path
             ]);
         }
+        $product->update([
+            'category_id'=>$request->category_id,
+            'name'=>$request->name,
+        ]);
   
         
 

@@ -40,13 +40,21 @@ class CategoryController extends Controller
 
 
         $path = $request->file('image')->store('categories_image');
+        try{
+            $category = Category::create([
+                'name' => $request->name,
+                'image' => $path,
+            ]);
+            return response()->json($category,200);
+        }catch(Throwable $th){
+            return response()->json([
+                'message'=>"Some error occur in saving daga",
+                'error'=>$th->getMessage()
+            ],500);
+        }
+       
 
-        $category = Category::create([
-            'name' => $request->name,
-            'image' => $path,
-        ]);
-
-        return response()->json($category, 200);
+      
     }
 
     /**
@@ -82,11 +90,11 @@ class CategoryController extends Controller
                 'name' => $request->name,
                 'image' => $path,
             ]);
-            return response()->json($category);
+            return response()->json($category,200);
         } catch (Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage(),
-            ], 200);
+            ], 500);
         }
     }
 
